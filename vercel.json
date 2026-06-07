@@ -6,8 +6,9 @@
       "framework": "nextjs"
     },
     "backend": {
-      "root": "backend",
-      "routePrefix": "/../backend"
+      "entrypoint": "backend/app/main.py",
+      "routePrefix": "/api",
+      "runtime": "@vercel/python"
     }
   }
 }
