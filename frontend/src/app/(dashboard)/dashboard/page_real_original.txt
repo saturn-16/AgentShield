@@ -1,0 +1,78 @@
+"use client";
+
+import React, { useEffect } from "react";
+import PageHeader from "@/components/shared/PageHeader";
+import TrustGauge from "@/components/charts/TrustGauge";
+import RiskHeatmap from "@/components/charts/RiskHeatmap";
+import { useDashboardStore } from "@/stores/dashboard";
+import { useAuthStore } from "@/stores/auth";
+import { gsapUtils } from "@/lib/gsap";
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
+import { Shield, ShieldAlert, Globe, Activity, TrendingUp, AlertTriangle } from "lucide-react";
+import { getSeverityColor, formatDate } from "@/lib/utils";
+
+export default function Dashboard() {
+  const { user } = useAuthStore();
+  const { data, fetchDashboard, isLoading } = useDashboardStore();
+
+  useEffect(() => {
+    fetchDashboard();
+  }, [fetchDashboard]);
+
+  useEffect(() => {
+    if (!isLoading && data) {
+      // Trigger animations on dashboard panels
+      gsapUtils.staggerIn(".dash-card", 0.1);
+    }
+  }, [isLoading, data]);
+
+  // Robust realistic fallback data in case API is bootstrapping
+  const stats = data?.stats || {
+    total_scans: 1248,
+    threats_detected: 42,
+    average_trust_score: 84,
+    active_agents: 4,
+    scans_today: 18,
+    threats_today: 1
+  };
+
+  const scanActivity = data?.scan_activity || [
+    { date: "May 26", prompt_scans: 45, url_scan
+          <TrustGauge score={stats.average_trust_score} size={190} />
+        </div>
+      </div>
+
+      {/* Grid risk heatmap & recent threats list */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Heatmap */}
+        <div className="dash-card glass p-6 rounded-xl lg:col-span-2">
+          <h3 className="text-sm font-bold text-shield-text uppercase tracking-wider mb-6">Threat Intensity Heatmap</h3>
+          <RiskHeatmap />
+        </div>
+
+        {/* Recent threats list */}
+        <div className="dash-card glass p-6 rounded-xl flex flex-col justify-between">
+          <div>
+            <h3 className="text-sm font-bold text-shield-text uppercase tracking-wider mb-4 flex items-center gap-1.5">
+              <AlertTriangle className="w-4 h-4 text-red-400 animate-pulse" />
+              Recent Incidents
+            </h3>
+            <div className="divide-y divide-shield-border">
+              {recentThreats.map((threat) => (
+                <div key={threat.id} className="py-3 flex items-center justify-between">
+                  <div className="min-w-0 pr-2">
+                    <p className="text-xs font-semibold text-shield-text truncate">{threat.type}</p>
+                    <span className="text-[10px] text-shield-text-muted">{formatDate(threat.created_at)}</span>
+                  </div>
+                  <span className={`text-[9px] font-bold px-2 py-0.5 rounded border uppercase ${getSeverityColor(threat.severity)}`}>
+                    {threat.severity}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

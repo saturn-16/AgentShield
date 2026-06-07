@@ -1,0 +1,143 @@
+version: "3.9"
+
+services:
+  # ─────────────────────────────────────────────
+  # PostgreSQL 16 — Primary data store
+  # ─────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: agentshield-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: agentshield
+      POSTGRES_USER: agentshield
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-agentshield_dev}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U agentshield -d agentshield"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - agentshield-network
+
+  # ─────────────────────────────────────────────
+  # Redis 7 — Cache, session store & Celery broker
+  # ─────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: agentshield-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    networks:
+      - agentshield-network
+
+  # ─────────────────────────────────────────────
+  # FastAPI Backend — Core API & Agent orchestration
+  # ─────────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: agentshield-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://agentshield:${DB_PASSWORD:-agentshield_dev}@postgres:5432/agentshield
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=${SECRET_KEY:-change-me-in-production-xxxxxxxxxxxxxx}
+      - ALGORITHM=${ALGORITHM:-HS256}
+      - ACCESS_TOKEN_EXPIRE_MINUTES=${ACCESS_TOKEN_EXPIRE_MINUTES:-30}
+      - REFRESH_TOKEN_EXPIRE_DAYS=${REFRESH_TOKEN_EXPIRE_DAYS:-7}
+      - CORS_ORIGINS=${CORS_ORIGINS:-["http://localhost:3000"]}
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - APP_NAME=${APP_NAME:-AgentShield AI}
+      - DEBUG=${DEBUG:-true}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./backend:/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - agentshield-network
+
+  # ─────────────────────────────────────────────
+  # Celery Worker — Async task processing
+  # ─────────────────────────────────────────────
+  celery_worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: agentshield-celery
+    restart: unless-stopped
+    depends_on:
+      - backend
+      - redis
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://agentshield:${DB_PASSWORD:-agentshield_dev}@postgres:5432/agentshield
+      - REDIS_URL=redis://redis:6379/0
+      - SECRET_KEY=${SECRET_KEY:-change-me-in-production-xxxxxxxxxxxxxx}
+      - ALGORITHM=${ALGORITHM:-HS256}
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - APP_NAME=${APP_NAME:-AgentShield AI}
+      - DEBUG=${DEBUG:-true}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    volumes:
+      - ./backend:/app
+    command: celery -A app.tasks.celery_app worker --loglevel=info --concurrency=4
+    networks:
+      - agentshield-network
+
+  # ─────────────────────────────────────────────
+  # Next.js Frontend — Dashboard UI
+  # ─────────────────────────────────────────────
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: agentshield-frontend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:8000/api/v1
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+      - /app/.next
+    command: npm run dev
+    networks:
+      - agentshield-network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  agentshield-network:
+    driver: bridge
+    name: agentshield-network

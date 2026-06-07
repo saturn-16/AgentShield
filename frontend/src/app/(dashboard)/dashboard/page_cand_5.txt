@@ -1,0 +1,76 @@
+Created At: 2026-06-01T15:51:54Z
+Completed At: 2026-06-01T15:51:55Z
+File Path: `file:///c:/Users/Gaurav%20Kumar/Desktop/microsoft%20hackathon/agentshield-ai/frontend/src/app/%28dashboard%29/dashboard/page.tsx`
+Total Lines: 616
+Total Bytes: 39401
+Showing lines 1 to 616
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: "use client";
+2: 
+3: import React, { useEffect, useState, useRef } from "react";
+4: import TrustGauge from "@/components/charts/TrustGauge";
+5: import RiskHeatmap from "@/components/charts/RiskHeatmap";
+6: import { useDashboardStore } from "@/stores/dashboard";
+7: import { useAuthStore } from "@/stores/auth";
+8: import { gsap } from "@/lib/gsap";
+9: import { Shield, ShieldAlert, Globe, Activity, ChevronDown, ListFilter, AlertOctagon, ShieldCheck, Terminal, Layers, FileText, CheckCircle, AlertCircle, ArrowRight, GitCommit, Heart } from "lucide-react";
+10: import { getSeverityColor, formatDate } from "@/lib/utils";
+11: 
+12: export default function Dashboard() {
+13:   const { user } = useAuthStore();
+14:   const { data, fetchDashboard, isLoading } = useDashboardStore();
+15:   const [activeChapter, setActiveChapter] = useState<number>(0);
+16:   
+17:   const triggerRef = useRef<HTMLDivElement>(null);
+18:   const pinRef = useRef<HTMLDivElement>(null);
+19: 
+20:   useEffect(() => {
+21:     fetchDashboard();
+22:   }, [fetchDashboard]);
+23: 
+24:   // Robust realistic fallback data in case API is bootstrapping
+25:   const stats = data?.stats || {
+26:     total_scans: 1248,
+27:     threats_detected: 42,
+28:     average_trust_score: 84,
+29:     active_agents: 4,
+30:     scans_today: 18,
+31:     threats_today: 1
+32:   };
+33: 
+34:   const recentThreats = data?.recent_threats || [
+35:     { id: "1", type: "Prompt Override", threat_score: 85, severity: "critical", created_at: new Date().toISOString() },
+36:     { id: "2", typ
+<truncated 38871 bytes>
+est", col: "text-emerald-500", border: "border-emerald-500/20 bg-emerald-500/5" },
+587:                 { name: "2. Input & URL Firewalls", desc: "Sentinel & Egress security filtering", col: "text-cyan-500", border: "border-cyan-500/20 bg-cyan-500/5" },
+588:                 { name: "3. Multi-Agent Validation", desc: "Orchestrated Sentinel/Validator verification", col: "text-violet-500", border: "border-violet-500/20 bg-violet-500/5" },
+589:                 { name: "4. GRC Compliance Logs", desc: "Operations summaries & reports compiled", col: "text-indigo-500", border: "border-indigo-500/20 bg-indigo-500/5" }
+590:               ].map((step, idx) => (
+591:                 <div key={idx} className={`p-2.5 rounded-xl border flex items-center justify-between ${step.border}`}>
+592:                   <div className="flex flex-col">
+593:                     <span className={step.col}>{step.name}</span>
+594:                     <span className="text-[7.5px] text-shield-text-muted mt-0.5">{step.desc}</span>
+595:                   </div>
+596:                   {idx < 3 && <ArrowRight className="w-3 h-3 text-shield-text-muted shrink-0 ml-2" />}
+597:                 </div>
+598:               ))}
+599:             </div>
+600:           </div>
+601: 
+602:         </div>
+603: 
+604:       </div>
+605: 
+606:       {/* 4. GUIDE SCROLL PROMPT WHEEL - Fixed bottom center */}
+607:       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-30 hidden lg:flex flex-col items-center gap-2 opacity-50 select-none pointer-events-none">
+608:         <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-shield-text-muted">USE SCROLL WHEEL TO PROGRESS STORY</span>
+609:         <div className="w-4 h-6.5 rounded-full border border-shield-border/80 flex justify-center pt-1.5">
+610:           <div className="w-1 h-1.5 bg-shield-accent rounded-full animate-scroll"></div>
+611:         </div>
+612:       </div>
+613:     </div>
+614:   );
+615: }
+616: 
+The above content shows the entire, complete file contents of the requested file.

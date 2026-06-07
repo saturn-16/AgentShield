@@ -1,0 +1,89 @@
+Created At: 2026-06-01T14:52:44Z
+Completed At: 2026-06-01T14:52:44Z
+File Path: `file:///c:/Users/Gaurav%20Kumar/Desktop/microsoft%20hackathon/agentshield-ai/frontend/src/app/%28dashboard%29/dashboard/page.tsx`
+Total Lines: 170
+Total Bytes: 8601
+Showing lines 1 to 170
+The following code has been modified to include a line number before every line, in the format: <line_number>: <original_line>. Please note that any changes targeting the original code should remove the line number, colon, and leading space.
+1: "use client";
+2: 
+3: import React, { useEffect } from "react";
+4: import PageHeader from "@/components/shared/PageHeader";
+5: import TrustGauge from "@/components/charts/TrustGauge";
+6: import RiskHeatmap from "@/components/charts/RiskHeatmap";
+7: import { useDashboardStore } from "@/stores/dashboard";
+8: import { useAuthStore } from "@/stores/auth";
+9: import { gsapUtils } from "@/lib/gsap";
+10: import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from "recharts";
+11: import { Shield, ShieldAlert, Globe, Activity, TrendingUp, AlertTriangle } from "lucide-react";
+12: import { getSeverityColor, formatDate } from "@/lib/utils";
+13: 
+14: export default function Dashboard() {
+15:   const { user } = useAuthStore();
+16:   const { data, fetchDashboard, isLoading } = useDashboardStore();
+17: 
+18:   useEffect(() => {
+19:     fetchDashboard();
+20:   }, [fetchDashboard]);
+21: 
+22:   useEffect(() => {
+23:     if (!isLoading && data) {
+24:       // Trigger animations on dashboard panels
+25:       gsapUtils.staggerIn(".dash-card", 0.1);
+26:     }
+27:   }, [isLoading, data]);
+28: 
+29:   // Robust realistic fallback data in case API is bootstrapping
+30:   const stats = data?.stats || {
+31:     total_scans: 1248,
+32:     threats_detected: 42,
+33:     average_trust_score: 84,
+34:     active_agents: 4,
+35:     scans_today: 18,
+36:     threats_today: 1
+37:   };
+38: 
+39:   const scanActivity = data?.scan_activity || [
+40:     { date: "May 26", prompt_scans: 45, url_scan
+<truncated 5840 bytes>
+lassName="text-sm font-bold text-shield-text uppercase tracking-wider self-start mb-4">Trust posture</h3>
+132:           <TrustGauge score={stats.average_trust_score} size={190} />
+133:         </div>
+134:       </div>
+135: 
+136:       {/* Grid risk heatmap & recent threats list */}
+137:       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+138:         {/* Heatmap */}
+139:         <div className="dash-card glass p-6 rounded-xl lg:col-span-2">
+140:           <h3 className="text-sm font-bold text-shield-text uppercase tracking-wider mb-6">Threat Intensity Heatmap</h3>
+141:           <RiskHeatmap />
+142:         </div>
+143: 
+144:         {/* Recent threats list */}
+145:         <div className="dash-card glass p-6 rounded-xl flex flex-col justify-between">
+146:           <div>
+147:             <h3 className="text-sm font-bold text-shield-text uppercase tracking-wider mb-4 flex items-center gap-1.5">
+148:               <AlertTriangle className="w-4 h-4 text-red-400 animate-pulse" />
+149:               Recent Incidents
+150:             </h3>
+151:             <div className="divide-y divide-shield-border">
+152:               {recentThreats.map((threat) => (
+153:                 <div key={threat.id} className="py-3 flex items-center justify-between">
+154:                   <div className="min-w-0 pr-2">
+155:                     <p className="text-xs font-semibold text-shield-text truncate">{threat.type}</p>
+156:                     <span className="text-[10px] text-shield-text-muted">{formatDate(threat.created_at)}</span>
+157:                   </div>
+158:                   <span className={`text-[9px] font-bold px-2 py-0.5 rounded border uppercase ${getSeverityColor(threat.severity)}`}>
+159:                     {threat.severity}
+160:                   </span>
+161:                 </div>
+162:               ))}
+163:             </div>
+164:           </div>
+165:         </div>
+166:       </div>
+167:     </div>
+168:   );
+169: }
+170: 
+The above content shows the entire, complete file contents of the requested file.
