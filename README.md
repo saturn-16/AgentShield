@@ -1,249 +1,310 @@
 # 🛡️ AgentShield AI
 
-### Autonomous Security Operations Center for AI Agent Swarms
+## Team Nexus
 
-AgentShield AI is an enterprise-grade AI Security Operations Center (AI-SOC) designed to protect autonomous AI agents from emerging threats such as prompt injection attacks, jailbreak attempts, malicious URLs, unsafe tool usage, and data exfiltration.
-
-As organizations increasingly deploy AI agents powered by Large Language Models (LLMs), traditional cybersecurity solutions lack visibility into agent workflows and decision-making processes. AgentShield AI bridges this gap by providing real-time threat detection, monitoring, compliance management, and multi-agent security orchestration.
+### Securing the Future of Autonomous AI Systems
 
 ---
 
-## 🚀 Problem Statement
+# Project Description
 
-Modern AI agents process untrusted user inputs, interact with external APIs, execute tools, and collaborate with other agents without continuous human oversight.
+AgentShield AI is an Autonomous Security Operations Center (AI-SOC) designed to secure AI agents and LLM-powered applications against emerging threats such as prompt injection attacks, jailbreak attempts, malicious URLs, data exfiltration, and unsafe tool interactions.
 
-This creates a new attack surface vulnerable to:
+As AI agents become increasingly autonomous, traditional cybersecurity solutions lack visibility into their decision-making processes and interactions. AgentShield AI addresses this challenge by providing a dedicated security layer that continuously monitors, analyzes, and validates agent activities before they impact downstream systems.
 
-* Prompt Injection Attacks
-* Jailbreak Attempts
-* Data Exfiltration
-* Unsafe API Interactions
-* Tool Abuse
-* Multi-Agent Contamination
-* OWASP LLM Top 10 Risks
-
-Existing security solutions are not specifically designed to secure autonomous AI systems.
-
-AgentShield AI addresses these challenges through a dedicated AI security layer that continuously monitors, validates, and protects AI operations.
+The platform combines real-time threat detection, multi-agent security orchestration, trust scoring, and compliance monitoring into a unified dashboard, enabling organizations to deploy AI systems with greater confidence, transparency, and security.
 
 ---
 
-## 🎯 Key Features
+# Key Features
 
-### Prompt Injection Scanner
-
-Detects and blocks:
-
-* DAN Jailbreaks
-* Role Override Attacks
-* Prompt Manipulation
-* Hidden Instructions
-* Multi-turn Exploitation Attempts
-
----
-
-### URL Threat Scanner
-
-Validates outbound requests using:
-
-* Domain Reputation Analysis
-* Threat Intelligence Checks
-* URL Inspection
-* API Request Validation
+* Prompt Injection Detection
+* Jailbreak Prevention
+* URL Threat Analysis
+* Multi-Agent Security Validation
+* Trust Score & Risk Assessment
+* Real-Time Threat Monitoring
+* Security Event Logging
+* Compliance Reporting
+* Interactive Security Dashboard
+* OWASP LLM Top 10 Mapping
 
 ---
 
-### Multi-Agent Security Swarm
+# Architecture Overview
 
-Built using LangGraph orchestration.
+AgentShield AI follows a Defense-in-Depth architecture where every interaction passes through multiple security layers before reaching the AI model.
 
-Specialized security agents collaborate to validate threats:
+### Security Workflow
 
-#### Sentinel Agent
-
-Performs initial threat detection.
-
-#### Analyzer Agent
-
-Conducts deep security analysis.
-
-#### Validator Agent
-
-Verifies findings and reduces false positives.
-
-#### Reporter Agent
-
-Maintains audit logs and generates reports.
-
----
-
-### Trust Engine
-
-Calculates a dynamic AI Trust Posture Index based on:
-
-* Threat Activity
-* Agent Behavior
-* Security Events
-* Compliance Status
-
----
-
-### Threat Monitor
-
-Provides:
-
-* Real-Time Monitoring
-* Incident Correlation
-* Threat Classification
-* Security Analytics
-* Event Logging
-
----
-
-### Compliance & Reporting
-
-Automatically generates reports aligned with:
-
-* OWASP Top 10 for LLM Applications
-* NIST AI Risk Management Framework
-
-Export formats:
-
-* PDF
-* CSV
-* JSON
-
----
-
-## 🏗️ System Architecture
-
-```text
-User Input
-    │
-    ▼
+User Request
+↓
 Prompt Injection Scanner
-    │
-    ▼
+↓
 URL Threat Scanner
-    │
-    ▼
+↓
 Multi-Agent Security Swarm
 (Sentinel → Analyzer → Validator → Reporter)
-    │
-    ▼
+↓
 Trust Engine
-    │
-    ▼
+↓
 Threat Monitor
-    │
-    ▼
+↓
 Protected LLM Layer
-    │
-    ▼
+↓
 Response Validation
-    │
-    ▼
+↓
 Secure Response
-```
+
+### Core Components
+
+#### Prompt Injection Scanner
+
+Detects jailbreaks, prompt manipulation, role overrides, and malicious instructions.
+
+#### URL Threat Scanner
+
+Analyzes URLs and external requests using security validation techniques.
+
+#### Multi-Agent Security Swarm
+
+Uses specialized AI agents to collaboratively validate threats and improve detection accuracy.
+
+#### Trust Engine
+
+Calculates dynamic trust scores based on security events and system behavior.
+
+#### Threat Monitor
+
+Provides real-time visibility into threats, incidents, and security posture.
+
+#### Compliance Module
+
+Maps findings against OWASP LLM Top 10 and NIST AI Risk Management Framework standards.
 
 ---
 
-## ⚙️ Technology Stack
+# AI Technologies Used
 
-### Frontend
+### Large Language Models
+
+* Google Gemini API
+* OpenAI API
+
+### AI Frameworks
+
+* LangChain
+* LangGraph
+
+### AI Capabilities
+
+* NLP-Based Threat Detection
+* Prompt Classification
+* Risk Scoring
+* Multi-Agent Orchestration
+* Threat Severity Analysis
+* Automated Security Reporting
+
+---
+
+# Technology Stack
+
+## Frontend
 
 * React.js
 * Tailwind CSS
 * Framer Motion
-* GSAP
 * Recharts
 
-### Backend
+## Backend
 
 * FastAPI
 * Python
 
-### AI & Security
+## Database
 
-* LangChain
-* LangGraph
-* OpenAI API
-* Google Gemini API
-* Transformers
+* PostgreSQL / SQLite
 
-### Database
-
-* PostgreSQL
-* SQLite
-
-### Authentication
+## Authentication
 
 * JWT
 * bcrypt
 
-### Reporting
+## Reporting & Analytics
 
-* ReportLab
 * Pandas
+* ReportLab
 
 ---
 
-## 📊 Impact Metrics
+# Setup Instructions
 
-AgentShield AI is designed to improve:
+## 1. Clone Repository
 
-| Metric                | Goal      |
-| --------------------- | --------- |
-| Threat Detection Rate | >95%      |
-| False Positive Rate   | <5%       |
-| Response Time         | <1 Second |
-| Compliance Coverage   | High      |
-| Agent Trust Accuracy  | >90%      |
+```bash
+git clone <repository-url>
+cd AgentShield-AI
+```
+
+## 2. Create Virtual Environment
+
+```bash
+python -m venv venv
+```
+
+### Windows
+
+```bash
+venv\Scripts\activate
+```
+
+### Linux / Mac
+
+```bash
+source venv/bin/activate
+```
+
+## 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+## 4. Configure Environment Variables
+
+Create a `.env` file and add:
+
+```env
+OPENAI_API_KEY=your_key
+GEMINI_API_KEY=your_key
+SECRET_KEY=your_secret
+DATABASE_URL=your_database_url
+```
+
+## 5. Start Backend
+
+```bash
+uvicorn app.main:app --reload
+```
+
+## 6. Start Frontend
+
+```bash
+npm install
+npm run dev
+```
+
+## 7. Access Application
+
+Open:
+
+```text
+http://localhost:3000
+```
+
+or
+
+```text
+http://localhost:5173
+```
+
+depending on the frontend configuration.
 
 ---
 
-## 🔒 Security Principles
+# Dependencies
 
-AgentShield AI follows a Defense-in-Depth strategy:
+### Backend Dependencies
 
-* Zero Trust Architecture
-* Multi-Layer Threat Detection
-* Consensus-Based Validation
-* Continuous Monitoring
-* Auditability & Compliance
-* Secure-by-Design Principles
+* FastAPI
+* Uvicorn
+* LangChain
+* LangGraph
+* OpenAI
+* Google Generative AI SDK
+* SQLAlchemy
+* bcrypt
+* python-dotenv
+* Pandas
+* ReportLab
 
----
+### Frontend Dependencies
 
-## 📈 Future Enhancements
-
-* Real-Time Threat Intelligence Integration
-* Behavioral Agent Profiling
-* Federated Trust Scoring
-* SIEM Integration
-* Enterprise SSO Support
-* Cloud-Native Deployment
-* Advanced LLM Risk Analytics
-
----
-
-## 🌍 Potential Applications
-
-* Enterprise AI Platforms
-* AI Customer Support Systems
-* Autonomous Business Agents
-* Multi-Agent Research Systems
-* AI-Powered SaaS Products
-* Government & Regulatory AI Systems
+* React
+* Tailwind CSS
+* Framer Motion
+* Recharts
+* Axios
 
 ---
 
-## 👨‍💻 Team
+# Expected Outcomes
 
-Team Nexus
-
-Building secure and trustworthy AI systems for the future of autonomous intelligence.
+* Improved AI System Security
+* Reduced Risk of Prompt Injection Attacks
+* Better Visibility into AI Operations
+* Automated Threat Detection
+* Compliance Monitoring
+* Increased Trust in Autonomous AI Systems
 
 ---
 
-### Securing the Future of Autonomous AI
+# Team Nexus
+
+### Gaurav Kumar
+
+**Team Lead & Full Stack Developer**
+
+Responsibilities:
+
+* Project Architecture Design
+* Backend Development
+* AI Security Workflow Design
+* Integration of AI Models & Security Logic
+* Documentation & Deployment
+
+---
+
+### Arpit Sharma
+
+**Frontend Developer & UI/UX Designer**
+
+Responsibilities:
+
+* Dashboard Development
+* User Interface Design
+* User Experience Optimization
+* Data Visualization Components
+* Frontend Integration
+
+---
+
+### Dhruv Agrawal
+
+**AI & Research Engineer**
+
+Responsibilities:
+
+* Threat Detection Research
+* LangGraph Multi-Agent Workflow Design
+* AI Model Evaluation
+* Risk Scoring Logic
+* Testing & Validation
+
+---
+
+# Team Description
+
+**Team Nexus represents the convergence of ideas, creativity, and technology. We are a group of passionate innovators, builders, and problem-solvers dedicated to transforming complex challenges into meaningful solutions. Driven by curiosity, collaboration, and continuous learning, we combine diverse perspectives to create scalable, user-centric products that deliver real-world impact. Our mission is to push the boundaries of innovation while building solutions that are practical, reliable, and capable of making a lasting difference.**
+
+---
+
+## License
+
+This project was developed for innovation, research, and educational purposes as part of a hackathon initiative.
+
+---
+
+### Team Nexus | AgentShield AI
+
+**Securing Autonomous Intelligence Through Intelligent Defense**
