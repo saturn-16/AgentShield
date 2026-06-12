@@ -249,50 +249,6 @@ depending on the frontend configuration.
 
 ---
 
-# Team Nexus
-
-### Gaurav Kumar
-
-**Team Lead & Full Stack Developer**
-
-Responsibilities:
-
-* Project Architecture Design
-* Backend Development
-* AI Security Workflow Design
-* Integration of AI Models & Security Logic
-* Documentation & Deployment
-
----
-
-### Arpit Sharma
-
-**Frontend Developer & UI/UX Designer**
-
-Responsibilities:
-
-* Dashboard Development
-* User Interface Design
-* User Experience Optimization
-* Data Visualization Components
-* Frontend Integration
-
----
-
-### Dhruv Agrawal
-
-**AI & Research Engineer**
-
-Responsibilities:
-
-* Threat Detection Research
-* LangGraph Multi-Agent Workflow Design
-* AI Model Evaluation
-* Risk Scoring Logic
-* Testing & Validation
-
----
-
 # Team Description
 
 **Team Nexus represents the convergence of ideas, creativity, and technology. We are a group of passionate innovators, builders, and problem-solvers dedicated to transforming complex challenges into meaningful solutions. Driven by curiosity, collaboration, and continuous learning, we combine diverse perspectives to create scalable, user-centric products that deliver real-world impact. Our mission is to push the boundaries of innovation while building solutions that are practical, reliable, and capable of making a lasting difference.**
